@@ -14,7 +14,7 @@ model_path = os.path.join(cwd, 'models/model1.hdf5')
 # save_to_hdf5(dataset_dir, 'DRIVE.hdf5')
 
 deepRetina = DRIUNET(data_path, model_path)
-deepRetina.train()
+# deepRetina.train()
 deepRetina.predict()
 
 
