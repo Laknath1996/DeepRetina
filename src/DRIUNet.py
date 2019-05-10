@@ -180,7 +180,7 @@ class DRIUNET(object):
         ax1.set_title('Retinal Image')
         ax2.imshow(np.squeeze(self.y_test[id]), cmap='jet')
         ax2.set_title('Annontated Vessels')
-        ax3.imshow(np.squeeze(self.pred_test[id]), cmap='jet')
+        ax3.imshow(np.squeeze(pred_test[id]), cmap='jet')
         ax3.set_title('Predicted Vessels')
         plt.show
 
