@@ -48,8 +48,6 @@ class UNET(object):
 
 
     def unet(self):
-        if self.model:
-            return self.model
 
         input_img = Input((self.img_rows, self.img_cols, self.channel))
 
