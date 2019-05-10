@@ -101,9 +101,11 @@ class UNET(object):
 class DRIUNET(object):
     def __init__(self, data_path, model_path):
         self.unet = UNET()
+        self.data_path = data_path
+        self.model_path = model_path
         self.model = self.unet.unet()
 
-        (self.x_train, self.y_train, self.x_val, self.y_val, self.x_test, self.y_test) = load_data(data_path)
+        (self.x_train, self.y_train, self.x_val, self.y_val, self.x_test, self.y_test) = load_data(self.data_path)
 
         plot_samples(self.x_train[1], self.y_train[1])
 
@@ -130,7 +132,7 @@ class DRIUNET(object):
         )
 
         self.model_checkpoint = ModelCheckpoint(
-                    model_path,
+                    self.model_path,
                     monitor='loss',
                     verbose=1,
                     save_best_only=True
@@ -169,9 +171,11 @@ class DRIUNET(object):
     def predict(self):
         self.x_test /= 255
         self.y_test /= 255
-        self.pred_test = self.model.predict(self.x_test)
 
-        id = np.random.randint(self.pred_test.shape[0])
+        model = load_model(self.model_path)
+        pred_test = self.model.predict(self.x_test)
+
+        id = np.random.randint(pred_test.shape[0])
         fig, ax = plt.subplots(1, 3, sharex=True, sharey=True, figsize=(10, 10))
         ax1, ax2, ax3 = ax.ravel()
         ax1.imshow(np.squeeze(self.x_test[id]), cmap='jet')
