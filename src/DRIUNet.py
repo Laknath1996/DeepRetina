@@ -94,7 +94,7 @@ class UNET(object):
         outputs = Conv2D(1, (1, 1), activation='sigmoid')(c9)
         self.model = Model(inputs=[input_img], outputs=[outputs])
 
-        self.model.summary()
+        # self.model.summary()
 
         return self.model
 
