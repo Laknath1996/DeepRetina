@@ -14,7 +14,7 @@ import numpy as np
 from keras.optimizers import *
 from keras.callbacks import ModelCheckpoint, EarlyStopping, TensorBoard
 import matplotlib.pyplot as plt
-from utilities import *
+from src.utilities import *
 from keras.preprocessing.image import ImageDataGenerator
 
 class UNET(object):
