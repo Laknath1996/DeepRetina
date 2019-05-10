@@ -168,9 +168,7 @@ class DRIUNET(object):
         self.x_test /= 255
         self.y_test /= 255
         self.pred_test = self.model.predict(self.x_test)
-        return self.pred_test
 
-    def plot_results(self):
         id = np.random.randint(self.pred_test.shape[0])
         fig, ax = plt.subplots(1, 3, sharex=True, sharey=True, figsize=(10, 10))
         ax1, ax2, ax3 = ax.ravel()
@@ -181,6 +179,8 @@ class DRIUNET(object):
         ax3.imshow(np.squeeze(self.pred_test[id]), cmap='jet')
         ax3.set_title('Predicted Vessels')
         plt.show
+
+
 
 
 
