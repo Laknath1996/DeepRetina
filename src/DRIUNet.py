@@ -138,8 +138,6 @@ class DRIUNET(object):
                     save_best_only=True
         )
 
-        self.pred_test = None
-
 
     def get_generator(self, images, masks):
         image_datagen = ImageDataGenerator(**self.datagen_args)
