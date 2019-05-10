@@ -6,9 +6,6 @@ import h5py
 import numpy as np
 import os
 import cv2
-import matplotlib
-matplotlib.use("TkAgg")
-import matplotlib.pyplot as plt
 
 def access(path, dataset_file, data_name, target_size ):
     images = os.listdir(path)
