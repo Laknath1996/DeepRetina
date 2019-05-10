@@ -13,9 +13,13 @@ import h5py
 import numpy as np
 from keras.optimizers import *
 from keras.callbacks import ModelCheckpoint, EarlyStopping, TensorBoard
+import matplotlib
+matplotlib.use('TkAgg')
 import matplotlib.pyplot as plt
 from src.utilities import *
 from keras.preprocessing.image import ImageDataGenerator
+import scikitplot as skplt
+
 
 class UNET(object):
     def __init__(self, img_rows=256, img_cols=256, channel=3, n_filters=16, dropout=0.1, batchnorm=True ):
@@ -26,7 +30,6 @@ class UNET(object):
         self.dropout = dropout
         self.batchnorm = batchnorm
         self.model = None
-
 
     def conv2d_block(self, input_tensor, filters, kernel_size=3):
         """Function to add 2 convolutional layers with the parameters passed to it"""
@@ -45,7 +48,6 @@ class UNET(object):
         x = Activation('relu')(x)
 
         return x
-
 
     def unet(self):
 
@@ -98,6 +100,7 @@ class UNET(object):
 
         return self.model
 
+
 class DRIUNET(object):
     def __init__(self, data_path, model_path):
         self.unet = UNET()
@@ -125,7 +128,6 @@ class DRIUNET(object):
 
         self.epochs = 50
 
-
         self.earlystopper = EarlyStopping(
                     patience=10,
                     verbose=1
@@ -137,7 +139,6 @@ class DRIUNET(object):
                     verbose=1,
                     save_best_only=True
         )
-
 
     def get_generator(self, images, masks):
         image_datagen = ImageDataGenerator(**self.datagen_args)
@@ -164,7 +165,6 @@ class DRIUNET(object):
                     validation_steps=10
         )
         print('Training Complete')
-        return self.model
 
     def predict(self):
         self.x_test /= 255
@@ -173,6 +173,7 @@ class DRIUNET(object):
         model = load_model(self.model_path)
         pred_test = model.predict(self.x_test)
 
+        # plot the results
         id = np.random.randint(pred_test.shape[0])
         fig, ax = plt.subplots(1, 3, sharex=True, sharey=True, figsize=(10, 10))
         ax1, ax2, ax3 = ax.ravel()
@@ -183,6 +184,10 @@ class DRIUNET(object):
         ax3.imshow(np.squeeze(pred_test[id]), cmap='jet')
         ax3.set_title('Predicted Vessels')
         plt.show
+
+        # plot P-R curve
+        skplt.metrics.plot_precision_recall_curve(self.y_test.flatten(), pred_test.flatten())
+
 
 
 
