@@ -186,7 +186,10 @@ class DRIUNET(object):
         plt.show
 
         # plot P-R curve
+        self.y_test[self.y_test < 0.5] = 0
+        self.y_test[self.y_test >= 0.5] = 1
         skplt.metrics.plot_precision_recall_curve(self.y_test.flatten(), pred_test.flatten())
+        plt.show()
 
 
 
