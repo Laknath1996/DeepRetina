@@ -170,6 +170,9 @@ class DRIUNET(object):
         self.x_test /= 255
         self.y_test /= 255
 
+        self.y_test[self.y_test < 0.5] = 0
+        self.y_test[self.y_test >= 0.5] = 1
+
         model = load_model(self.model_path)
         pred_test = model.predict(self.x_test)
 
@@ -186,8 +189,6 @@ class DRIUNET(object):
         plt.show
 
         # plot P-R curve
-        self.y_test[self.y_test < 0.5] = 0
-        self.y_test[self.y_test >= 0.5] = 1
         skplt.metrics.plot_precision_recall_curve(self.y_test.flatten(), pred_test.flatten())
         plt.show()
 
