@@ -160,7 +160,8 @@ class DRIUNET(object):
                     steps_per_epoch=200,
                     verbose=1,
                     callbacks=[self.model_checkpoint, self.earlystopper],
-                    validation_data=val_generator
+                    validation_data=val_generator,
+                    validation_steps=10
         )
         print('Training Complete')
         return self.model
