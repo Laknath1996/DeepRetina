@@ -173,7 +173,7 @@ class DRIUNET(object):
         self.y_test /= 255
 
         model = load_model(self.model_path)
-        pred_test = self.model.predict(self.x_test)
+        pred_test = model.predict(self.x_test)
 
         id = np.random.randint(pred_test.shape[0])
         fig, ax = plt.subplots(1, 3, sharex=True, sharey=True, figsize=(10, 10))
