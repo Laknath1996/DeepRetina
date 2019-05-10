@@ -157,6 +157,7 @@ class DRIUNET(object):
         self.model.fit_generator(
                     train_generator,
                     epochs=self.epochs,
+                    steps_per_epoch=len(train_generator),
                     verbose=1,
                     callbacks=[self.model_checkpoint, self.earlystopper],
                     validation_data=val_generator
