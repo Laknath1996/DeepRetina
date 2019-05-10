@@ -19,7 +19,7 @@ def access(path, dataset_file, data_name, target_size ):
         im = cv2.imread(os.path.join(path, image))
         if im is None:
             continue
-        if data_name=='train_mask' or data_name=='val_mask' or data_name=='test_mask':
+        if data_name=='train_mask' or data_name=='val_mask' or data_name=='test_mask' or data_name=='test_mask_human':
             im = cv2.cvtColor(im, cv2.COLOR_BGR2GRAY)
         else:
             im = cv2.cvtColor(im, cv2.COLOR_BGR2RGB)
@@ -36,6 +36,7 @@ def save_to_hdf5(path, filename):
     dataset_file.create_dataset("val_mask",(3, 256, 256), np.float32)
     dataset_file.create_dataset("test", (20, 256, 256, 3), np.float32)
     dataset_file.create_dataset("test_mask", (20, 256, 256), np.float32)
+    dataset_file.create_dataset("test_mask_human", (20, 256, 256), np.float32)
 
     dataset_file = access(os.path.join(path, 'train/images'), dataset_file, "train", (256, 256))
     dataset_file = access(os.path.join(path, 'train/masks'), dataset_file, "train_mask", (256, 256))
@@ -43,6 +44,7 @@ def save_to_hdf5(path, filename):
     dataset_file = access(os.path.join(path, 'val/masks'), dataset_file, "val_mask", (256, 256))
     dataset_file = access(os.path.join(path, 'test/images'), dataset_file, "test", (256, 256))
     dataset_file = access(os.path.join(path, 'test/masks'), dataset_file, "test_mask", (256, 256))
+    dataset_file = access(os.path.join(path, 'test/masks_human'), dataset_file, "test_mask_human", (256, 256))
 
     dataset_file.close()
 
@@ -54,12 +56,14 @@ def load_data(data_path):
     y_val = np.array(data["val_mask"])
     x_test = np.array(data["test"])
     y_test = np.array(data["test_mask"])
+    y_test_human = np.array(data["test_mask_human"])
 
     y_train = y_train.reshape(y_train.shape[0], 256, 256, 1)
     y_val = y_val.reshape(y_val.shape[0], 256, 256, 1)
     y_test = y_test.reshape(y_test.shape[0], 256, 256, 1)
+    y_test_human = y_test_human.reshape(y_test_human.shape[0], 256, 256, 1)
     data.close()
-    return x_train, y_train, x_val, y_val, x_test, y_test
+    return x_train, y_train, x_val, y_val, x_test, y_test, y_test_human
 
 def plot_samples(X, Y):
     X /= 255

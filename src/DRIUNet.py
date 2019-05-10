@@ -108,7 +108,7 @@ class DRIUNET(object):
         self.model_path = model_path
         self.model = self.unet.unet()
 
-        (self.x_train, self.y_train, self.x_val, self.y_val, self.x_test, self.y_test) = load_data(self.data_path)
+        (self.x_train, self.y_train, self.x_val, self.y_val, self.x_test, self.y_test, self.y_test_human) = load_data(self.data_path)
 
         plot_samples(self.x_train[1], self.y_train[1])
 
@@ -169,6 +169,7 @@ class DRIUNET(object):
     def predict(self):
         self.x_test /= 255
         self.y_test /= 255
+        self.y_test_human /= 255
 
         self.y_test[self.y_test < 0.5] = 0
         self.y_test[self.y_test >= 0.5] = 1
@@ -177,22 +178,24 @@ class DRIUNET(object):
         pred_test = model.predict(self.x_test)
 
         # plot the results
-        # id = np.random.randint(pred_test.shape[0])
-        # fig, ax = plt.subplots(1, 3, sharex=True, sharey=True, figsize=(10, 10))
-        # ax1, ax2, ax3 = ax.ravel()
-        # ax1.imshow(np.squeeze(self.x_test[id]), cmap='jet')
-        # ax1.set_title('Retinal Image')
-        # ax2.imshow(np.squeeze(self.y_test[id]), cmap='jet')
-        # ax2.set_title('Annontated Vessels')
-        # ax3.imshow(np.squeeze(pred_test[id]), cmap='jet')
-        # ax3.set_title('Predicted Vessels')
-        # plt.show()
-
-        # plot P-R curve
-        probas = np.vstack((pred_test.flatten(), 1-pred_test.flatten())).T
-        print(probas.shape)
-        skplt.metrics.plot_precision_recall_curve(self.y_test.flatten(), probas)
+        id = np.random.randint(pred_test.shape[0])
+        fig, ax = plt.subplots(1, 3, sharex=True, sharey=True, figsize=(10, 10))
+        ax1, ax2, ax3 = ax.ravel()
+        ax1.imshow(np.squeeze(self.x_test[id]), cmap='jet')
+        ax1.set_title('Retinal Image')
+        ax2.imshow(np.squeeze(self.y_test[id]))
+        ax2.set_title('Annontated Vessels')
+        ax3.imshow(np.squeeze(pred_test[id]))
+        ax3.set_title('Predicted Vessels')
         plt.show()
+
+        # plot P-R curves
+        probas = np.vstack((1-pred_test.flatten(), pred_test.flatten())).T
+        ax = skplt.metrics.plot_precision_recall_curve(self.y_test.flatten(), probas, plot_micro=False, classes_to_plot=1)
+
+        probas = np.vstack((1-self.y_test_human.flatten(), self.y_test_human.flatten())).T
+        skplt.metrics.plot_precision_recall(self.y_test.flatten(), probas, plot_micro=False, classes_to_plot=1, ax=ax)
+
 
 
 
