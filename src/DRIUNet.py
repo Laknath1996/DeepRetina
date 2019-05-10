@@ -101,7 +101,7 @@ class UNET(object):
 class DRIUNET(object):
     def __init__(self, model_name):
         self.unet = UNET()
-        self.model = self.unet.model()
+        self.model = self.unet.unet()
 
         (self.x_train, self.y_train, self.x_val, self.y_val, self.x_test, self.y_test) = load_data()
 
