@@ -177,16 +177,16 @@ class DRIUNET(object):
         pred_test = model.predict(self.x_test)
 
         # plot the results
-        id = np.random.randint(pred_test.shape[0])
-        fig, ax = plt.subplots(1, 3, sharex=True, sharey=True, figsize=(10, 10))
-        ax1, ax2, ax3 = ax.ravel()
-        ax1.imshow(np.squeeze(self.x_test[id]), cmap='jet')
-        ax1.set_title('Retinal Image')
-        ax2.imshow(np.squeeze(self.y_test[id]), cmap='jet')
-        ax2.set_title('Annontated Vessels')
-        ax3.imshow(np.squeeze(pred_test[id]), cmap='jet')
-        ax3.set_title('Predicted Vessels')
-        plt.show()
+        # id = np.random.randint(pred_test.shape[0])
+        # fig, ax = plt.subplots(1, 3, sharex=True, sharey=True, figsize=(10, 10))
+        # ax1, ax2, ax3 = ax.ravel()
+        # ax1.imshow(np.squeeze(self.x_test[id]), cmap='jet')
+        # ax1.set_title('Retinal Image')
+        # ax2.imshow(np.squeeze(self.y_test[id]), cmap='jet')
+        # ax2.set_title('Annontated Vessels')
+        # ax3.imshow(np.squeeze(pred_test[id]), cmap='jet')
+        # ax3.set_title('Predicted Vessels')
+        # plt.show()
 
         # plot P-R curve
         probas = np.vstack((pred_test.flatten(), 1-pred_test.flatten())).T
