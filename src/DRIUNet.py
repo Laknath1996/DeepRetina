@@ -189,7 +189,8 @@ class DRIUNET(object):
         plt.show
 
         # plot P-R curve
-        skplt.metrics.plot_precision_recall_curve(self.y_test.flatten(), pred_test.flatten())
+        probas = np.vstack((pred_test.flatten(), 1-pred_test.flatten()))
+        skplt.metrics.plot_precision_recall_curve(self.y_test.flatten(), probas)
         plt.show()
 
 
