@@ -3,13 +3,9 @@ execute DRIUNet
 '''
 
 # from src.DRIUNet import *
-import matplotlib
-matplotlib.use("TkAgg")
 import matplotlib.pyplot as plt
 import os
 from src.utilities import *
-import matplotlib
-
 
 cwd = os.getcwd()
 dataset_dir = os.path.join(cwd, 'datasets')
