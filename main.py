@@ -26,7 +26,7 @@ ax2.imshow(np.squeeze(y_train[1]), cmap='gray')
 ax2.set_title('Vessel Image')
 plt.show()
 
-deepRetina = DRIUNET()
+deepRetina = DRIUNET('model1.hdf5')
 deepRetina.train()
 deepRetina.predict()
 
