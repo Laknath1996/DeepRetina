@@ -6,6 +6,7 @@ import h5py
 import numpy as np
 import os
 import cv2
+import matplotlib.pyplot as plt
 
 def access(path, dataset_file, data_name, target_size ):
     images = os.listdir(path)
@@ -42,8 +43,8 @@ def save_to_hdf5(path, filename):
 
     dataset_file.close()
 
-def load_data(path, filename):
-    data = h5py.File(os.path.join(path, filename), mode='r')
+def load_data(data_path):
+    data = h5py.File(data_path, mode='r')
     x_train = np.array(data["train"])
     y_train = np.array(data["train_mask"])
     x_val = np.array(data["val"])
@@ -52,6 +53,17 @@ def load_data(path, filename):
     y_test = np.array(data["test_mask"])
     data.close()
     return x_train, y_train, x_val, y_val, x_test, y_test
+
+def plot_samples(X, Y):
+    X /= 255
+    Y /= 255
+    fig, ax = plt.subplots(1, 2, sharex=True, sharey=True)
+    ax1, ax2 = ax.ravel()
+    ax1.imshow(np.squeeze(X), cmap='jet')
+    ax1.set_title('Retinal Image')
+    ax2.imshow(np.squeeze(Y), cmap='gray')
+    ax2.set_title('Vessel Image')
+    plt.show()
 
 
 

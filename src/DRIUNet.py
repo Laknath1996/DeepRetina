@@ -99,11 +99,13 @@ class UNET(object):
         return self.model
 
 class DRIUNET(object):
-    def __init__(self, model_name):
+    def __init__(self, data_path, model_path):
         self.unet = UNET()
         self.model = self.unet.unet()
 
-        (self.x_train, self.y_train, self.x_val, self.y_val, self.x_test, self.y_test) = load_data()
+        (self.x_train, self.y_train, self.x_val, self.y_val, self.x_test, self.y_test) = load_data(data_path)
+
+        plot_samples(self.x_train[1], self.y_train[1])
 
         self.datagen_args = dict(
                      rescale=1./255,
@@ -128,7 +130,7 @@ class DRIUNET(object):
         )
 
         self.model_checkpoint = ModelCheckpoint(
-                    os.path.join('/models', model_name),
+                    model_path,
                     monitor='loss',
                     verbose=1,
                     save_best_only=True
