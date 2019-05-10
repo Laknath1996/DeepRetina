@@ -186,10 +186,10 @@ class DRIUNET(object):
         ax2.set_title('Annontated Vessels')
         ax3.imshow(np.squeeze(pred_test[id]), cmap='jet')
         ax3.set_title('Predicted Vessels')
-        plt.show
+        plt.show()
 
         # plot P-R curve
-        probas = np.vstack((pred_test.flatten(), 1-pred_test.flatten()))
+        probas = np.vstack((pred_test.flatten(), 1-pred_test.flatten())).T
         skplt.metrics.plot_precision_recall_curve(self.y_test.flatten(), probas)
         plt.show()
 
