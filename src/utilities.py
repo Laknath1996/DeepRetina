@@ -7,7 +7,7 @@ import numpy as np
 import os
 import cv2
 import matplotlib.pyplot as plt
-% matplotlib inline
+
 
 def access(path, dataset_file, data_name, target_size ):
     images = os.listdir(path)
