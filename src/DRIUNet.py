@@ -117,7 +117,7 @@ class DRIUNET(object):
 
         self.compile_args = dict(
                     optimizer=Adam(lr=1e-4),
-                    loss='binary_cross_entropy',
+                    loss='binary_crossentropy',
                     metrics=['accuracy']
         )
 
