@@ -3,8 +3,8 @@ execute DRIUNet
 '''
 
 from src.DRIUNet import *
-import matplotlib
-matplotlib.use('TkAgg')
+# import matplotlib
+# matplotlib.use('TkAgg')
 import matplotlib.pyplot as plt
 import os
 from src.utilities import *
