@@ -51,6 +51,10 @@ def load_data(data_path):
     y_val = np.array(data["val_mask"])
     x_test = np.array(data["test"])
     y_test = np.array(data["test_mask"])
+
+    y_train = y_train.reshape(y_train.shape[0], 256, 256, 1)
+    y_val = y_val.reshape(y_val.shape[0], 256, 256, 1)
+    y_test = y_test.reshape(y_test.shape[0], 256, 256, 1)
     data.close()
     return x_train, y_train, x_val, y_val, x_test, y_test
 
