@@ -205,7 +205,7 @@ class DRIUNET(object):
         # plot ROC curves (?)
         print('plotting PR Curves...')
         ax2 = skplt.metrics.plot_roc(self.y_test.flatten(), probas_unet, plot_micro=False, plot_macro=False, classes_to_plot=1)
-        skplt.metrics.plot_precision_recall(self.y_test.flatten(), probas_human, plot_micro=False, plot_macro=False, classes_to_plot=1, ax=ax2, cmap='jet')
+        skplt.metrics.plot_roc(self.y_test.flatten(), probas_human, plot_micro=False, plot_macro=False, classes_to_plot=1, ax=ax2, cmap='jet')
 
         # accuracy metrics
         pred_class = np.copy(pred_test)
