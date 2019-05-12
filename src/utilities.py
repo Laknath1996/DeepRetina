@@ -30,21 +30,21 @@ def access(path, dataset_file, data_name, target_size ):
 
 def save_to_hdf5(path, filename):
     dataset_file = h5py.File(os.path.join(path, filename), mode='w')
-    dataset_file.create_dataset("train", (17, 256, 256, 3), np.float32)
-    dataset_file.create_dataset("train_mask", (17, 256, 256), np.float32)
-    dataset_file.create_dataset("val", (3, 256, 256, 3), np.float32)
-    dataset_file.create_dataset("val_mask",(3, 256, 256), np.float32)
-    dataset_file.create_dataset("test", (20, 256, 256, 3), np.float32)
-    dataset_file.create_dataset("test_mask", (20, 256, 256), np.float32)
-    dataset_file.create_dataset("test_mask_human", (20, 256, 256), np.float32)
+    dataset_file.create_dataset("train", (17, 512, 512, 3), np.float32)
+    dataset_file.create_dataset("train_mask", (17, 512, 512), np.float32)
+    dataset_file.create_dataset("val", (3, 512, 512, 3), np.float32)
+    dataset_file.create_dataset("val_mask",(3, 512, 512), np.float32)
+    dataset_file.create_dataset("test", (20, 512, 512, 3), np.float32)
+    dataset_file.create_dataset("test_mask", (20, 512, 512), np.float32)
+    dataset_file.create_dataset("test_mask_human", (20, 512, 512), np.float32)
 
-    dataset_file = access(os.path.join(path, 'train/images'), dataset_file, "train", (256, 256))
-    dataset_file = access(os.path.join(path, 'train/masks'), dataset_file, "train_mask", (256, 256))
-    dataset_file = access(os.path.join(path, 'val/images'), dataset_file, "val", (256, 256))
-    dataset_file = access(os.path.join(path, 'val/masks'), dataset_file, "val_mask", (256, 256))
-    dataset_file = access(os.path.join(path, 'test/images'), dataset_file, "test", (256, 256))
-    dataset_file = access(os.path.join(path, 'test/masks'), dataset_file, "test_mask", (256, 256))
-    dataset_file = access(os.path.join(path, 'test/masks_human'), dataset_file, "test_mask_human", (256, 256))
+    dataset_file = access(os.path.join(path, 'train/images'), dataset_file, "train", (512, 512))
+    dataset_file = access(os.path.join(path, 'train/masks'), dataset_file, "train_mask", (512, 512))
+    dataset_file = access(os.path.join(path, 'val/images'), dataset_file, "val", (512, 512))
+    dataset_file = access(os.path.join(path, 'val/masks'), dataset_file, "val_mask", (512, 512))
+    dataset_file = access(os.path.join(path, 'test/images'), dataset_file, "test", (512, 512))
+    dataset_file = access(os.path.join(path, 'test/masks'), dataset_file, "test_mask", (512, 512))
+    dataset_file = access(os.path.join(path, 'test/masks_human'), dataset_file, "test_mask_human", (512, 512))
 
     dataset_file.close()
 
@@ -58,10 +58,10 @@ def load_data(data_path):
     y_test = np.array(data["test_mask"])
     y_test_human = np.array(data["test_mask_human"])
 
-    y_train = y_train.reshape(y_train.shape[0], 256, 256, 1)
-    y_val = y_val.reshape(y_val.shape[0], 256, 256, 1)
-    y_test = y_test.reshape(y_test.shape[0], 256, 256, 1)
-    y_test_human = y_test_human.reshape(y_test_human.shape[0], 256, 256, 1)
+    y_train = y_train.reshape(y_train.shape[0], 512, 512, 1)
+    y_val = y_val.reshape(y_val.shape[0], 512, 512, 1)
+    y_test = y_test.reshape(y_test.shape[0], 512, 512, 1)
+    y_test_human = y_test_human.reshape(y_test_human.shape[0], 512, 512, 1)
     data.close()
     return x_train, y_train, x_val, y_val, x_test, y_test, y_test_human
 

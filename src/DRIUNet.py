@@ -179,7 +179,7 @@ class DRIUNET(object):
 
         # plot the results
         id = np.random.randint(pred_test.shape[0])
-        fig, ax = plt.subplots(1, 3, sharex=True, sharey=True, figsize=(10, 10))
+        fig, ax = plt.subplots(1, 3, sharex=True, sharey=True, figsize=(15, 15))
         ax1, ax2, ax3 = ax.ravel()
         ax1.imshow(np.squeeze(self.x_test[id]), cmap='jet')
         ax1.set_title('Retinal Image')
@@ -196,6 +196,7 @@ class DRIUNET(object):
         probas_human = np.vstack((1-self.y_test_human.flatten(), self.y_test_human.flatten())).T
         skplt.metrics.plot_precision_recall(self.y_test.flatten(), probas_human, plot_micro=False, classes_to_plot=1, ax=ax)
 
+        # accuracy metrics
 
 
 
