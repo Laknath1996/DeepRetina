@@ -103,14 +103,15 @@ class UNET(object):
 
 class DRIUNET(object):
     def __init__(self, data_path, model_path):
-        self.unet = UNET()
         self.data_path = data_path
         self.model_path = model_path
-        self.model = self.unet.unet()
+
 
         (self.x_train, self.y_train, self.x_val, self.y_val, self.x_test, self.y_test, self.y_test_human) = load_data(self.data_path)
-
         plot_samples(self.x_train[1], self.y_train[1])
+
+        self.unet = UNET(img_rows=self.x_train.shape[1], img_cols=self.x_train.shape[2], channel=self.x_train.shape[3])
+        self.model = self.unet.unet()
 
         self.datagen_args = dict(
                      rescale=1./255,
