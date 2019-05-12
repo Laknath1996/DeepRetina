@@ -9,6 +9,8 @@ import cv2
 # import matplotlib
 # matplotlib.use('TkAgg')
 import matplotlib.pyplot as plt
+from sklearn.metrics import f1_score, accuracy_score, roc_auc_score
+
 
 
 def access(path, dataset_file, data_name, target_size ):
@@ -27,6 +29,7 @@ def access(path, dataset_file, data_name, target_size ):
         dataset_file[data_name][id, ...] = im
         id += 1
     return dataset_file
+
 
 def save_to_hdf5(path, filename):
     dataset_file = h5py.File(os.path.join(path, filename), mode='w')
@@ -48,6 +51,7 @@ def save_to_hdf5(path, filename):
 
     dataset_file.close()
 
+
 def load_data(data_path):
     data = h5py.File(data_path, mode='r')
     x_train = np.array(data["train"])
@@ -65,6 +69,7 @@ def load_data(data_path):
     data.close()
     return x_train, y_train, x_val, y_val, x_test, y_test, y_test_human
 
+
 def plot_samples(X, Y):
     X /= 255
     Y /= 255
@@ -75,6 +80,32 @@ def plot_samples(X, Y):
     ax2.imshow(np.squeeze(Y), cmap='gray')
     ax2.set_title('Vessel Image')
     plt.show()
+
+
+def get_f1_score(y_true, y_pred):
+    y_true = y_true.flatten()
+    y_pred = y_pred.flatten()
+    return f1_score(y_true, y_pred, average='weighted')
+
+
+def get_accuracy(y_true, y_pred):
+    y_true = y_true.flatten()
+    y_pred = y_pred.flatten()
+    return accuracy_score(y_true, y_pred)
+
+
+def get_roc_auc(y_true, y_score):
+    y_true = y_true.flatten()
+    y_score = y_score.flatten()
+    return roc_auc_score(y_true, y_score)
+
+
+
+
+
+
+
+
 
 
 

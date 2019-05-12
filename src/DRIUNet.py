@@ -194,15 +194,30 @@ class DRIUNET(object):
         ax3.set_title('Predicted Vessels')
         plt.show()
 
-        # plot P-R curves
+        # plot P-R curves (?)
         print('plotting PR Curves...')
         probas_unet = np.vstack((1-pred_test.flatten(), pred_test.flatten())).T
-        ax = skplt.metrics.plot_precision_recall(self.y_test.flatten(), probas_unet, plot_micro=False, classes_to_plot=1)
+        ax1 = skplt.metrics.plot_precision_recall(self.y_test.flatten(), probas_unet, plot_micro=False, classes_to_plot=1)
 
         probas_human = np.vstack((1-self.y_test_human.flatten(), self.y_test_human.flatten())).T
-        skplt.metrics.plot_precision_recall(self.y_test.flatten(), probas_human, plot_micro=False, classes_to_plot=1, ax=ax, cmap='jet')
+        skplt.metrics.plot_precision_recall(self.y_test.flatten(), probas_human, plot_micro=False, classes_to_plot=1, ax=ax1, cmap='jet')
+
+        # plot ROC curves (?)
+        print('plotting PR Curves...')
+        ax2 = skplt.metrics.plot_roc(self.y_test.flatten(), probas_unet, plot_micro=False, plot_macro=False, classes_to_plot=1)
+        skplt.metrics.plot_precision_recall(self.y_test.flatten(), probas_human, plot_micro=False, plot_macro=False, classes_to_plot=1, ax=ax2, cmap='jet')
 
         # accuracy metrics
+        pred_class = np.copy(pred_test)
+        pred_class[pred_class < 0.5] = 0
+        pred_class[pred_class >= 0.5] = 1
+        print('F1-Score : ', get_f1_score(self.y_test, pred_class))
+        print('Accuracy : ', get_accuracy(self.y_test, pred_class))
+        print('ROC AUC  : ', get_roc_auc(self.y_test, pred_test))
+
+
+
+
 
 
 
