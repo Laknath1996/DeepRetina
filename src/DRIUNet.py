@@ -30,6 +30,7 @@ class UNET(object):
         self.dropout = dropout
         self.batchnorm = batchnorm
         self.model = None
+        print('Input shape : (%i, %i, %i)' % (self.img_rows, self.img_cols, self.channel))
 
     def conv2d_block(self, input_tensor, filters, kernel_size=3):
         """Function to add 2 convolutional layers with the parameters passed to it"""
@@ -106,9 +107,12 @@ class DRIUNET(object):
         self.data_path = data_path
         self.model_path = model_path
 
-
         (self.x_train, self.y_train, self.x_val, self.y_val, self.x_test, self.y_test, self.y_test_human) = load_data(self.data_path)
         plot_samples(self.x_train[1], self.y_train[1])
+
+        print('train samples = %i' % self.x_train.shape[0])
+        print('val samples = %i' % self.x_val.shape[0])
+        print('test samples = %i' % self.x_test.shape[0])
 
         self.unet = UNET(img_rows=self.x_train.shape[1], img_cols=self.x_train.shape[2], channel=self.x_train.shape[3])
         self.model = self.unet.unet()
