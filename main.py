@@ -13,12 +13,7 @@ Look in to optical disk segmentation too
 '''
 
 from src.DRIUNet import *
-# import matplotlib
-# matplotlib.use('TkAgg')
-import matplotlib.pyplot as plt
-import os
 from src.utilities import *
-import scikitplot as skplt
 
 cwd = os.getcwd()
 data_path = os.path.join(cwd, 'datasets/DRIVE_3.hdf5')
