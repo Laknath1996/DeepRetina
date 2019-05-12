@@ -195,6 +195,7 @@ class DRIUNET(object):
         plt.show()
 
         # plot P-R curves
+        print('plotting PR Curves...')
         probas_unet = np.vstack((1-pred_test.flatten(), pred_test.flatten())).T
         ax = skplt.metrics.plot_precision_recall(self.y_test.flatten(), probas_unet, plot_micro=False, classes_to_plot=1)
 
