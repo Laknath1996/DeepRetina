@@ -13,12 +13,13 @@ import h5py
 import numpy as np
 from keras.optimizers import *
 from keras.callbacks import ModelCheckpoint, EarlyStopping, TensorBoard
-# import matplotlib
-# matplotlib.use('TkAgg')
+import matplotlib
+matplotlib.use('TkAgg')
 import matplotlib.pyplot as plt
 from src.utilities import *
 from keras.preprocessing.image import ImageDataGenerator
 import scikitplot as skplt
+from keras.utils.vis_utils import plot_model
 
 
 class UNET(object):
@@ -98,6 +99,7 @@ class UNET(object):
         self.model = Model(inputs=[input_img], outputs=[outputs])
 
         # self.model.summary()
+        # plot_model(self.model, to_file='model_plot.png', show_shapes=True, show_layer_names=True)
 
         return self.model
 

@@ -6,11 +6,10 @@ import h5py
 import numpy as np
 import os
 import cv2
-# import matplotlib
-# matplotlib.use('TkAgg')
+import matplotlib
+matplotlib.use('TkAgg')
 import matplotlib.pyplot as plt
 from sklearn.metrics import f1_score, accuracy_score, roc_auc_score
-
 
 
 def access(path, dataset_file, data_name, target_size ):
