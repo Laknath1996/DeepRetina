@@ -8,12 +8,12 @@ import keras.backend as K
 K.set_image_data_format('channels_last')
 from keras.optimizers import *
 from keras.callbacks import ModelCheckpoint, EarlyStopping, TensorBoard
-import matplotlib
-matplotlib.use('TkAgg')
-from src.utilities import *
+import matplotlib.pyplot as plt
+from src.sclera_segmentation.utilities import *
 from keras.preprocessing.image import ImageDataGenerator
 import scikitplot as skplt
 from src.unet_zoo.UNET import *
+import numpy as np
 
 
 class ScleraNet(object):
@@ -25,7 +25,7 @@ class ScleraNet(object):
         self.model_path = model_path
 
         (self.x_train, self.y_train, self.x_val, self.y_val, self.x_test, self.y_test) = load_data(self.data_path)
-        plot_samples(self.x_train[1], self.y_train[1])
+        # plot_samples(self.x_train[1], self.y_train[1])
 
         print('train samples = %i' % self.x_train.shape[0])
         print('val samples = %i' % self.x_val.shape[0])

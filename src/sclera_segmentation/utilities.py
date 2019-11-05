@@ -6,8 +6,6 @@ import h5py
 import numpy as np
 import os
 import cv2
-import matplotlib
-matplotlib.use('TkAgg')
 import matplotlib.pyplot as plt
 from sklearn.metrics import f1_score, accuracy_score, roc_auc_score
 
@@ -151,10 +149,10 @@ def load_data(data_path):
     x_val /= 255.
     x_test /= 255.
 
-    # just the red channel
-    x_train = x_train[..., 0].reshape(x_train.shape[0], x_train.shape[1], x_train.shape[2], 1)
-    x_val= x_val[..., 0].reshape(x_val.shape[0], x_val.shape[1], x_val.shape[2], 1)
-    x_test = x_test[..., 0].reshape(x_test.shape[0], x_test.shape[1], x_test.shape[2], 1)
+    # # just the red channel
+    # x_train = x_train[..., 0].reshape(x_train.shape[0], x_train.shape[1], x_train.shape[2], 1)
+    # x_val= x_val[..., 0].reshape(x_val.shape[0], x_val.shape[1], x_val.shape[2], 1)
+    # x_test = x_test[..., 0].reshape(x_test.shape[0], x_test.shape[1], x_test.shape[2], 1)
 
     y_train[y_train >= 0.5] = 1
     y_val[y_val >= 0.5] = 1
@@ -174,12 +172,19 @@ def plot_samples(X, Y):
     """
     X /= 255
     Y /= 255
-    fig, ax = plt.subplots(1, 2, sharex=True, sharey=True)
-    ax1, ax2 = ax.ravel()
-    ax1.imshow(np.squeeze(X), cmap='jet')
+    mask = np.zeros((Y.shape[0], Y.shape[1], 3))
+    mask[..., 1] = Y
+
+    dst = X + mask*2
+
+    fig, ax = plt.subplots(1, 3, sharex=True, sharey=True)
+    ax1, ax2, ax3 = ax.ravel()
+    ax1.imshow(np.squeeze(X))
     ax1.set_title('Original Image')
     ax2.imshow(np.squeeze(Y), cmap='gray')
     ax2.set_title('Annotated Sclera Mask')
+    ax3.imshow(np.squeeze(dst))
+    ax3.set_title('Image + Mask')
     plt.show()
 
 
