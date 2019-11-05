@@ -49,7 +49,7 @@ from src.sclera_segmentation.ScleraNet import *
 # train
 #########################################
 
-data_path = '/home/ashwind/DeepRetina/src/sclera_segmentation/data/scleral_dataset'
+data_path = '/home/ashwind/DeepRetina/src/sclera_segmentation/data/scleral_dataset.hdf5'
 model_path = '/home/ashwind/DeepRetina/src/sclera_segmentation/models/sclera_model.hdf5'
 
 scn = ScleraNet(data_path, model_path)
